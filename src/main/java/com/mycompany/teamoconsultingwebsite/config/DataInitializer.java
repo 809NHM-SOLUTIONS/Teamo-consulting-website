@@ -19,16 +19,15 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (adminRepository.findByEmail("admin@teamoconsulting.co.za").isEmpty()) {
-            Admin admin = new Admin(
-                    "Teamo Admin",
-                    "" +
-                            "",
-                    passwordEncoder.encode("Admin@45"),
-                    "ADMIN"
-            );
 
-            adminRepository.save(admin);
-        }
+        Admin admin = adminRepository.findByEmail("admin@teamoconsulting.co.za")
+                .orElse(new Admin());
+
+        admin.setFullName("Teamo Admin");
+        admin.setEmail("admin@teamoconsulting.co.za");
+        admin.setPassword(passwordEncoder.encode("Admin@45"));
+        admin.setRole("ADMIN");
+
+        adminRepository.save(admin);
     }
 }
