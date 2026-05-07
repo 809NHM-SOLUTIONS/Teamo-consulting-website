@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Testimonials | Teamo Consulting</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Inter', sans-serif;
+            background:#f8fafc;
+            color:#1e293b;
+            min-height:100vh;
+        }
+
+        .topbar{
+            background:white;
+            padding:20px 40px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 2px 15px rgba(0,0,0,0.06);
+            position:sticky;
+            top:0;
+            z-index:100;
+        }
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:14px;
+        }
+
+        .brand img{
+            width:55px;
+        }
+
+        .brand h1{
+            font-size:22px;
+            font-weight:700;
+            color:#0f172a;
+        }
+
+        .logout-btn{
+            background:#ef4444;
+            color:white;
+            padding:12px 20px;
+            border-radius:10px;
+            text-decoration:none;
+            font-weight:600;
+            transition:0.3s ease;
+        }
+
+        .logout-btn:hover{
+            background:#dc2626;
+        }
+
+        .page-wrapper{
+            max-width:1200px;
+            margin:auto;
+            padding:50px 20px;
+        }
+
+        .page-header{
+            margin-bottom:40px;
+        }
+
+        .page-header h2{
+            font-size:38px;
+            color:#0f172a;
+            margin-bottom:12px;
+        }
+
+        .page-header p{
+            color:#64748b;
+            font-size:16px;
+        }
+
+        .testimonial-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+            gap:28px;
+        }
+
+        .testimonial-card{
+            background:white;
+            padding:28px;
+            border-radius:20px;
+            box-shadow:0 8px 30px rgba(0,0,0,0.07);
+            transition:0.3s ease;
+            border:1px solid #e2e8f0;
+        }
+
+        .testimonial-card:hover{
+            transform:translateY(-4px);
+        }
+
+        .stars{
+            color:#f59e0b;
+            font-size:20px;
+            margin-bottom:18px;
+        }
+
+        .testimonial-message{
+            color:#334155;
+            line-height:1.7;
+            margin-bottom:24px;
+            font-size:15px;
+        }
+
+        .client-info{
+            margin-bottom:24px;
+        }
+
+        .client-info h3{
+            font-size:18px;
+            color:#0f172a;
+            margin-bottom:6px;
+        }
+
+        .client-info p{
+            color:#64748b;
+            font-size:14px;
+            line-height:1.5;
+        }
+
+        .button-group{
+            display:flex;
+            gap:12px;
+        }
+
+        .approve-btn,
+        .reject-btn{
+            flex:1;
+            border:none;
+            padding:14px;
+            border-radius:12px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s ease;
+            font-size:14px;
+        }
+
+        .approve-btn{
+            background:#14b8a6;
+            color:white;
+        }
+
+        .approve-btn:hover{
+            background:#0f766e;
+        }
+
+        .reject-btn{
+            background:#ef4444;
+            color:white;
+        }
+
+        .reject-btn:hover{
+            background:#dc2626;
+        }
+
+        .empty-message{
+            background:white;
+            padding:30px;
+            border-radius:18px;
+            text-align:center;
+            color:#64748b;
+            box-shadow:0 8px 25px rgba(0,0,0,0.05);
+        }
+
+        @media(max-width:768px){
+
+            .topbar{
+                padding:18px 20px;
+            }
+
+            .brand h1{
+                font-size:18px;
+            }
+
+            .page-header h2{
+                font-size:30px;
+            }
+
+            .button-group{
+                flex-direction:column;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="topbar">
+
+    <div class="brand">
+        <img src="/images/teamo trans logo.png" alt="Teamo Logo">
+
+        <h1>Teamo Admin Portal</h1>
+    </div>
+
+    <a href="/logout" class="logout-btn">
+        Logout
+    </a>
+
+</div>
+
+<div class="page-wrapper">
+
+    <div class="page-header">
+        <h2>Pending Testimonials</h2>
+
+        <p>
+            Review, approve, or reject testimonials submitted by clients and programme participants.
+        </p>
+    </div>
+
+    <div id="pendingTestimonials" class="testimonial-grid">
+        <p class="empty-message">
+            Loading pending testimonials...
+        </p>
+    </div>
+
+</div>
+
+<script src="/js/admin-testimonials.js"></script>
+
+</body>
+</html>

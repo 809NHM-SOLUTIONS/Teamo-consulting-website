@@ -3,8 +3,18 @@ document.addEventListener('DOMContentLoaded', loadPendingTestimonials);
 async function loadPendingTestimonials() {
     const container = document.getElementById('pendingTestimonials');
 
+    if (!container) return;
+
     try {
-        const response = await fetch('/api/testimonials/pending');
+        const response = await fetch('/api/testimonials/pending', {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to load pending testimonials');
+        }
+
         const testimonials = await response.json();
 
         if (testimonials.length === 0) {
@@ -13,41 +23,85 @@ async function loadPendingTestimonials() {
         }
 
         container.innerHTML = testimonials.map(testimonial => `
-            <div class="testimonial">
-                <div class="stars">${'★'.repeat(testimonial.rating)}${'☆'.repeat(5 - testimonial.rating)}</div>
-                <p>"${escapeHTML(testimonial.message)}"</p>
-                <strong>
-                    — ${escapeHTML(testimonial.name)}, ${escapeHTML(testimonial.title)}
-                    <br>
-                    <small>${escapeHTML(testimonial.company)}</small>
-                </strong>
-
-                <div style="margin-top:20px;">
-                    <button onclick="approveTestimonial(${testimonial.id})">Approve</button>
-                    <button onclick="rejectTestimonial(${testimonial.id})" style="background:#ef4444; margin-left:10px;">Reject</button>
+          <div class="testimonial-card">
+                <div class="stars">
+                    ${'★'.repeat(testimonial.rating)}${'☆'.repeat(5 - testimonial.rating)}
                 </div>
+
+               <p class="testimonial-message">
+    "${escapeHTML(testimonial.message)}"
+</p>
+
+              <div class="client-info">
+    <h3>${escapeHTML(testimonial.name)}</h3>
+
+    <p>
+        ${escapeHTML(testimonial.title)}
+        <br>
+        ${escapeHTML(testimonial.company)}
+    </p>
+</div>
+
+              <div class="button-group">
+
+    <button
+        class="approve-btn"
+        onclick="approveTestimonial(${testimonial.id})">
+        Approve
+    </button>
+
+    <button
+        class="reject-btn"
+        onclick="rejectTestimonial(${testimonial.id})">
+        Reject
+    </button>
+
+</div>
             </div>
         `).join('');
 
     } catch (error) {
+        console.error(error);
         container.innerHTML = '<p class="empty-message">Could not load pending testimonials.</p>';
     }
 }
 
 async function approveTestimonial(id) {
-    await fetch(`/api/testimonials/${id}/approve`, {
-        method: 'PUT'
-    });
+    try {
+        const response = await fetch(`/api/testimonials/${id}/approve`, {
+            method: 'PUT',
+            credentials: 'include'
+        });
 
-    loadPendingTestimonials();
+        if (!response.ok) {
+            throw new Error('Failed to approve testimonial');
+        }
+
+        loadPendingTestimonials();
+
+    } catch (error) {
+        console.error(error);
+        alert('Could not approve testimonial. Please try again.');
+    }
 }
 
 async function rejectTestimonial(id) {
-    await fetch(`/api/testimonials/${id}/reject`, {
-        method: 'DELETE'
-    });
+    try {
+        const response = await fetch(`/api/testimonials/${id}/reject`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
 
-    loadPendingTestimonials();
+        if (!response.ok) {
+            throw new Error('Failed to reject testimonial');
+        }
+
+        loadPendingTestimonials();
+
+    } catch (error) {
+        console.error(error);
+        alert('Could not reject testimonial. Please try again.');
+    }
 }
 
 function escapeHTML(value) {
