@@ -22,7 +22,8 @@ public class DataInitializer implements CommandLineRunner {
         if (adminRepository.findByEmail("admin@teamoconsulting.co.za").isEmpty()) {
             Admin admin = new Admin(
                     "Teamo Admin",
-                    "admin@teamoconsulting.co.za",
+                    "" +
+                            "",
                     passwordEncoder.encode("Admin@45"),
                     "ADMIN"
             );
