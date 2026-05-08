@@ -2,6 +2,7 @@ package com.mycompany.teamoconsultingwebsite.config;
 
 import com.mycompany.teamoconsultingwebsite.entity.Admin;
 import com.mycompany.teamoconsultingwebsite.repository.AdminRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,16 +19,21 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) {
 
-        Admin admin = adminRepository.findByEmail("admin@teamoconsulting.co.za")
-                .orElse(new Admin());
+        adminRepository.deleteInvalidAdmins();
 
-        admin.setFullName("Teamo Admin");
-        admin.setEmail("admin@teamoconsulting.co.za");
-        admin.setPassword(passwordEncoder.encode("Admin@45"));
-        admin.setRole("ADMIN");
+        if (adminRepository.findByEmail("admin@teamoconsulting.co.za").isEmpty()) {
 
-        adminRepository.save(admin);
+            Admin admin = new Admin();
+
+            admin.setFullName("Teamo Admin");
+            admin.setEmail("admin@teamoconsulting.co.za");
+            admin.setPassword(passwordEncoder.encode("Admin@45"));
+            admin.setRole("ADMIN");
+
+            adminRepository.save(admin);
+        }
     }
 }
