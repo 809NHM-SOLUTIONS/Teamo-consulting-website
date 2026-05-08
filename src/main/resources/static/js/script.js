@@ -366,3 +366,6 @@ window.addEventListener('scroll', function () {
         navLinks.classList.remove('active');
     }
 });
+function goToLogin() {
+    window.location.href = "/login";
+}

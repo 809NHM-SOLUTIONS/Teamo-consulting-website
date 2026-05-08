@@ -723,9 +723,12 @@ footer {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
+    position: relative;
+    z-index: 1000;
+    pointer-events: auto;
 }
 
 .login-btn:hover {
