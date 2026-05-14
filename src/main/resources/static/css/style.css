@@ -219,7 +219,6 @@ h2 {
 
 .about-quote {
     margin-bottom: 60px;
-    width: 100vw;
 }
 
 /* GRID */
@@ -736,4 +735,20 @@ footer {
     color: #111;
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .section-inner {
+        padding: 0 16px;
+    }
+
+    p, h1, h2, h3 {
+        word-wrap: break-word;
+        line-height: 1.6;
+    }
+
 }
